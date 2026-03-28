@@ -1,110 +1,160 @@
-# 🎫 TicketManager
+# 💰 OperacoesBancarias-Spring
 
-A Java-based incident management system designed to register, track, and notify teams about incidents — with email and desktop notifications.
-
-> ⚠️ **Work in Progress** — This project is currently under active development. The core CRUD is functional, but some features are still being implemented.
+API REST desenvolvida em Java com Spring Boot, evoluída a partir de um sistema bancário console para uma arquitetura backend profissional.
 
 ---
 
-## 📌 About the Project
+## 🚀 Tecnologias Utilizadas
 
-TicketManager is a desktop application built with plain Java and Maven, focused on incident lifecycle management. It allows users to open incidents, assign responsibles, classify impact levels, and track status — all persisted locally via JSON.
-
-This project was built as part of a Java learning journey, following clean architecture principles and market-standard conventions.
-
----
-
-## 🚀 Features
-
-- [x] Interactive menu with CRUD operations
-- [x] Incident registration with title, description, impact and responsible
-- [x] Automatic timestamp on incident creation
-- [x] Impact classification (`LOW`, `MEDIUM`, `HIGH`, `CRITICAL`)
-- [x] Status tracking (`OPEN`, `IN_PROGRESS`, `RESOLVED`)
-- [x] Incident log entries
-- [x] JSON-based local persistence with Gson
-- [x] Search by ID with Optional
-- [x] Continuous menu loop with exit option
-- [ ] Email notifications
-- [ ] Desktop notifications
+- Java 17
+- Spring Boot 3.2.5
+- Spring Web (API REST)
+- Spring DevTools
+- Maven
+- BigDecimal (precisão financeira)
 
 ---
 
-## 🏗️ Project Structure
+## 🏗️ Arquitetura
 
 ```
-ticketmanager/
-├── src/
-│   └── main/
-│       └── java/
-│           └── com/ticketmanager/
-│               ├── model/
-│               │   ├── Incident.java
-│               │   ├── Status.java
-│               │   └── Impacto.java
-│               ├── repository/
-│               │   └── IncidentRepository.java
-│               ├── service/
-│               │   ├── IncidentService.java
-│               │   └── NotificacaoService.java (upcoming)
-│               └── App.java
-└── pom.xml
+src/main/java/dev/kelvin/operacoesbancarias/
+│
+├── app/         → Ponto de entrada (OperacoesBancariasSpringApplication)
+├── controller/  → Camada HTTP (ContaController)
+├── service/     → Regras de negócio (ContaService)
+├── model/       → Entidade de domínio (Conta)
+└── exception/   → Exceções customizadas e tratamento global
 ```
 
 ---
 
-## 🛠️ Technologies
+## 📡 Endpoints Disponíveis
 
-| Technology | Purpose |
-|---|---|
-| Java 17 | Core language |
-| Maven | Build and dependency management |
-| Gson 2.10.1 | JSON serialization/deserialization |
-| Jakarta Mail | Email notifications (upcoming) |
-| java.awt.SystemTray | Desktop notifications (upcoming) |
+### Consultar Saldo
+```
+GET /conta/saldo
+```
+**Resposta:**
+```json
+{
+  "saldo": 0
+}
+```
 
 ---
 
-## ⚙️ How to Run
+### Realizar Depósito
+```
+POST /conta/depositar?valor=500
+```
+**Resposta:**
+```json
+{
+  "mensagem": "Depósito realizado com sucesso",
+  "saldo": 500
+}
+```
 
-### Prerequisites
+---
 
+### Realizar Saque
+```
+POST /conta/sacar?valor=200
+```
+**Resposta:**
+```json
+{
+  "mensagem": "Saque realizado com sucesso",
+  "saldo": 300
+}
+```
+
+---
+
+### Erros Tratados
+
+Saldo insuficiente:
+```json
+{
+  "erro": "Saldo insuficiente para saque."
+}
+```
+
+Valor inválido:
+```json
+{
+  "erro": "O valor deve ser maior que zero."
+}
+```
+
+---
+
+## ▶️ Como Executar Localmente
+
+### Pré-requisitos
 - Java 17+
-- Maven 3.8+
+- Maven
 
-### Steps
+### Passos
 
 ```bash
-# Clone the repository
-git clone https://github.com/Kxllvin/ticketmanager.git
+# Clone o repositório
+git clone https://github.com/Kxllvin/OperacoesBancarias-Spring.git
 
-# Navigate to the project folder
-cd ticketmanager
+# Acesse a pasta
+cd OperacoesBancarias-Spring
 
-# Build and run (Linux/Mac)
-mvn compile exec:java -Dexec.mainClass="com.ticketmanager.App"
+# Execute a aplicação
+./mvnw spring-boot:run
+```
 
-# Build and run (Windows PowerShell)
-mvn compile "-Dexec.mainClass=com.ticketmanager.App" exec:java
+A aplicação estará disponível em: `http://localhost:8080`
+
+---
+
+## 🧪 Testando os Endpoints
+
+Recomendado usar **Postman** ou **Insomnia** para testar os endpoints POST.
+
+Para o endpoint GET, basta acessar diretamente no navegador:
+```
+http://localhost:8080/conta/saldo
 ```
 
 ---
 
-## 📐 Architecture
+## 💡 Conceitos Aplicados
 
-TicketManager follows a layered architecture based on the **Single Responsibility Principle (SRP)**:
-
-- **Model** — Defines what an incident is (data structure and enums)
-- **Repository** — Handles data persistence (read/write JSON)
-- **Service** — Contains business logic and orchestrates actions
-- **App** — Application entry point with interactive menu
-
----
-
-## 📄 License
-
-This project is intended for educational purposes.
+- API REST com Spring Boot
+- Arquitetura em camadas (Controller → Service → Model)
+- Tratamento global de exceções com `@RestControllerAdvice`
+- Respostas em JSON com `ResponseEntity`
+- Uso de `BigDecimal` para precisão em operações financeiras
+- Boas práticas de encapsulamento
 
 ---
 
-> Developed by [Kelvin](https://github.com/Kxllvin) · Java Backend Student · 2026
+## 📈 Roadmap
+
+- [x] Estrutura em camadas
+- [x] API REST com endpoints JSON
+- [x] Exceções customizadas
+- [x] Tratamento global de erros HTTP
+- [ ] Testes automatizados com JUnit
+- [ ] Persistência com banco de dados H2
+- [ ] Migração para PostgreSQL
+- [ ] Deploy na nuvem
+
+---
+
+## 🔗 Projeto Base
+
+Este projeto é a evolução do [OperacoesBancarias](https://github.com/Kxllvin/OperacoesBancarias), originalmente desenvolvido como aplicação console.
+
+---
+
+## 👨‍💻 Autor
+
+Kelvin Alves  
+[GitHub](https://github.com/Kxllvin) 
