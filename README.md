@@ -142,8 +142,8 @@ http://localhost:8080/conta/saldo
 - [x] Exceções customizadas
 - [x] Tratamento global de erros HTTP
 - [ ] Testes automatizados com JUnit
-- [ ] Persistência com banco de dados H2
-- [ ] Migração para PostgreSQL
+- [ ] Persistência com banco de dados H2 (para aprendizado de JPA e Spring Data)
+- [ ] Migração para PostgreSQL (banco relacional de produção)
 - [ ] Deploy na nuvem
 
 ---
